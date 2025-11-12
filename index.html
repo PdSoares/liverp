@@ -214,6 +214,110 @@
             background-color: #f1f5f9;
             border-radius: 4px;
         }
+        /* Estilos para campo de busca melhorado */
+        .search-container {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+        .search-input-group {
+            position: relative;
+            display: flex;
+            align-items: center;
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: var(--border-radius);
+            padding: 0.5rem;
+            transition: var(--transition);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+        .search-input-group:focus-within {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(121, 122, 121, 0.15);
+            transform: translateY(-2px);
+        }
+        .search-icon {
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            padding: 0 0.75rem;
+            display: flex;
+            align-items: center;
+        }
+        .search-input {
+            flex: 1;
+            border: none;
+            outline: none;
+            padding: 0.75rem 0.5rem;
+            font-size: 1rem;
+            background: transparent;
+        }
+        .search-input::placeholder {
+            color: #a0aec0;
+        }
+        .search-clear-btn {
+            background: none;
+            border: none;
+            color: #a0aec0;
+            font-size: 1.2rem;
+            padding: 0.5rem;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            transition: var(--transition);
+        }
+        .search-clear-btn:hover {
+            background-color: #f1f5f9;
+            color: var(--danger-color);
+        }
+        .search-clear-btn.active {
+            display: flex;
+        }
+        .search-results-info {
+            margin-top: 0.75rem;
+            font-size: 0.875rem;
+            color: var(--dark-color);
+            display: none;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 0.75rem;
+            background: #f7fafc;
+            border-radius: var(--border-radius);
+            border-left: 3px solid var(--primary-color);
+        }
+        .search-results-info.active {
+            display: flex;
+        }
+        .search-results-count {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        .crime-checkbox {
+            animation: fadeIn 0.3s ease-in;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-5px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .crime-checkbox[style*="display: none"] {
+            animation: fadeOut 0.2s ease-out;
+        }
+        @keyframes fadeOut {
+            from {
+                opacity: 1;
+            }
+            to {
+                opacity: 0;
+            }
+        }
         @media (max-width: 768px) {
             .card-body {
                 padding: 1rem;
@@ -272,13 +376,20 @@
                         <i class="bi bi-journal-text me-2"></i>Seleção de Crimes
                     </div>
                     <div class="card-body">
-                        <!-- Campo de Busca -->
-                        <div class="mb-3">
-                            <div class="input-group">
-                                <span class="input-group-text">
+                        <!-- Campo de Busca Melhorado -->
+                        <div class="search-container">
+                            <div class="search-input-group">
+                                <span class="search-icon">
                                     <i class="bi bi-search"></i>
                                 </span>
-                                <input type="text" class="form-control" id="buscaCrimes" placeholder="Buscar artigos cadastrados...">
+                                <input type="text" class="search-input" id="buscaCrimes" placeholder="Buscar artigos cadastrados...">
+                                <button type="button" class="search-clear-btn" id="limparBusca" title="Limpar busca">
+                                    <i class="bi bi-x-circle"></i>
+                                </button>
+                            </div>
+                            <div class="search-results-info" id="infoResultados">
+                                <i class="bi bi-info-circle"></i>
+                                <span>Encontrados <span class="search-results-count" id="contadorResultados">0</span> artigo(s)</span>
                             </div>
                         </div>
                         <ul class="nav nav-tabs" id="crimeTabs" role="tablist">
@@ -316,8 +427,8 @@
                                     <div class="crime-category">
                                         <h5 class="section-title">Artigos 101 - 137 (Diversos, Vida, Direitos, Patrimônio, Armas/Drogas)</h5>
                                         <div class="crime-checkbox">
-                                            <input class="form-check-input" type="checkbox" id="Art. 101 - Zaralho no recrutamento" name="crime" value="100|100000|NA">
-                                            <label class="form-check-label ms-2" for="Art. 101 - Zaralho no recrutamento">Art. 101 - Zaralho no recrutamento</label>
+                                            <input class="form-check-input" type="checkbox" id="Art. 101 - Azaralhamento Recrutamento" name="crime" value="100|100000|NA">
+                                            <label class="form-check-label ms-2" for="Art. 101 - Azaralhamento Recrutamento">Art. 101 - Azaralhamento Recrutamento</label>
                                         </div>
                                         <div class="crime-checkbox">
                                             <input class="form-check-input" type="checkbox" id="Art. 101.1 - Prisão Militar" name="crime" value="100|100000|NA">
@@ -662,8 +773,8 @@
                                 <div class="crime-category">
                                     <h5 class="section-title">Crimes Diversos</h5>
                                     <div class="crime-checkbox">
-                                        <input class="form-check-input" type="checkbox" id="Art. 101 - Zaralho no recrutamento" name="crime" value="100|100000|NA">
-                                        <label class="form-check-label ms-2" for="Art. 101 - Zaralho no recrutamento">Art. 101 - Zaralho no recrutamento</label>
+                                        <input class="form-check-input" type="checkbox" id="Art. 101 - Azaralhamento Recrutamento" name="crime" value="100|100000|NA">
+                                        <label class="form-check-label ms-2" for="Art. 101 - Azaralhamento Recrutamento">Art. 101 - Azaralhamento Recrutamento</label>
                                     </div>
                                     <div class="crime-checkbox">
                                         <input class="form-check-input" type="checkbox" id="Art. 101.1 - Prisão Militar" name="crime" value="100|100000|NA">
@@ -1183,60 +1294,115 @@
             copiarBtn.addEventListener('click', copiarResultado);
             limparBtn.addEventListener('click', limpar);
             
-            // Funcionalidade de busca de crimes
+            // Funcionalidade de busca de crimes melhorada
             const buscaCrimesInput = document.getElementById('buscaCrimes');
-            if (buscaCrimesInput) {
-                buscaCrimesInput.addEventListener('input', function() {
-                    const termoBusca = this.value.toLowerCase().trim();
-                    const todosCheckboxes = document.querySelectorAll('input[name="crime"]');
+            const limparBuscaBtn = document.getElementById('limparBusca');
+            const infoResultados = document.getElementById('infoResultados');
+            const contadorResultados = document.getElementById('contadorResultados');
+            
+            function atualizarBusca() {
+                if (!buscaCrimesInput) return;
+                
+                const termoBusca = buscaCrimesInput.value.toLowerCase().trim();
+                const todosCheckboxes = document.querySelectorAll('input[name="crime"]');
+                // Usar Set para rastrear crimes únicos (evitar duplicação entre abas)
+                const crimesUnicosEncontrados = new Set();
+                
+                // Mostrar/ocultar botão de limpar
+                if (limparBuscaBtn) {
+                    if (termoBusca !== '') {
+                        limparBuscaBtn.classList.add('active');
+                    } else {
+                        limparBuscaBtn.classList.remove('active');
+                    }
+                }
+                
+                if (infoResultados) {
+                    if (termoBusca === '') {
+                        infoResultados.classList.remove('active');
+                    }
+                }
+                
+                todosCheckboxes.forEach(checkbox => {
+                    const label = checkbox.nextElementSibling;
+                    const crimeCheckboxContainer = checkbox.closest('.crime-checkbox');
+                    const crimeId = checkbox.id; // ID único do crime
                     
-                    todosCheckboxes.forEach(checkbox => {
-                        const label = checkbox.nextElementSibling;
-                        const crimeCheckboxContainer = checkbox.closest('.crime-checkbox');
-                        
-                        if (crimeCheckboxContainer) {
-                            if (termoBusca === '') {
-                                // Se não há busca, mostrar todos
+                    if (crimeCheckboxContainer) {
+                        if (termoBusca === '') {
+                            // Se não há busca, mostrar todos
+                            crimeCheckboxContainer.style.display = '';
+                        } else {
+                            // Buscar no texto do label (nome do crime)
+                            const textoLabel = label ? label.textContent.toLowerCase() : '';
+                            const textoCheckbox = checkbox.id.toLowerCase();
+                            
+                            if (textoLabel.includes(termoBusca) || textoCheckbox.includes(termoBusca)) {
                                 crimeCheckboxContainer.style.display = '';
+                                // Adicionar ao Set apenas se ainda não foi adicionado (evita duplicação)
+                                crimesUnicosEncontrados.add(crimeId);
                             } else {
-                                // Buscar no texto do label (nome do crime)
-                                const textoLabel = label ? label.textContent.toLowerCase() : '';
-                                const textoCheckbox = checkbox.id.toLowerCase();
-                                
-                                if (textoLabel.includes(termoBusca) || textoCheckbox.includes(termoBusca)) {
-                                    crimeCheckboxContainer.style.display = '';
-                                } else {
-                                    crimeCheckboxContainer.style.display = 'none';
-                                }
+                                crimeCheckboxContainer.style.display = 'none';
                             }
                         }
-                    });
-                    
-                    // Também ocultar categorias vazias quando há busca
-                    if (termoBusca !== '') {
-                        const categorias = document.querySelectorAll('.crime-category');
-                        categorias.forEach(categoria => {
-                            const checkboxesNaCategoria = categoria.querySelectorAll('.crime-checkbox');
-                            let temVisivel = false;
-                            
-                            checkboxesNaCategoria.forEach(container => {
-                                if (container.style.display !== 'none') {
-                                    temVisivel = true;
-                                }
-                            });
-                            
-                            if (!temVisivel) {
-                                categoria.style.display = 'none';
-                            } else {
-                                categoria.style.display = '';
+                    }
+                });
+                
+                // Atualizar contador de resultados (usando tamanho do Set para contar apenas crimes únicos)
+                if (termoBusca !== '') {
+                    if (contadorResultados) {
+                        contadorResultados.textContent = crimesUnicosEncontrados.size;
+                    }
+                    if (infoResultados) {
+                        infoResultados.classList.add('active');
+                    }
+                }
+                
+                // Também ocultar categorias vazias quando há busca
+                if (termoBusca !== '') {
+                    const categorias = document.querySelectorAll('.crime-category');
+                    categorias.forEach(categoria => {
+                        const checkboxesNaCategoria = categoria.querySelectorAll('.crime-checkbox');
+                        let temVisivel = false;
+                        
+                        checkboxesNaCategoria.forEach(container => {
+                            if (container.style.display !== 'none') {
+                                temVisivel = true;
                             }
                         });
-                    } else {
-                        // Mostrar todas as categorias quando não há busca
-                        const categorias = document.querySelectorAll('.crime-category');
-                        categorias.forEach(categoria => {
+                        
+                        if (!temVisivel) {
+                            categoria.style.display = 'none';
+                        } else {
                             categoria.style.display = '';
-                        });
+                        }
+                    });
+                } else {
+                    // Mostrar todas as categorias quando não há busca
+                    const categorias = document.querySelectorAll('.crime-category');
+                    categorias.forEach(categoria => {
+                        categoria.style.display = '';
+                    });
+                }
+            }
+            
+            if (buscaCrimesInput) {
+                buscaCrimesInput.addEventListener('input', atualizarBusca);
+                
+                // Limpar busca ao clicar no botão
+                if (limparBuscaBtn) {
+                    limparBuscaBtn.addEventListener('click', function() {
+                        buscaCrimesInput.value = '';
+                        atualizarBusca();
+                        buscaCrimesInput.focus();
+                    });
+                }
+                
+                // Limpar busca com ESC
+                buscaCrimesInput.addEventListener('keydown', function(e) {
+                    if (e.key === 'Escape') {
+                        buscaCrimesInput.value = '';
+                        atualizarBusca();
                     }
                 });
             }
